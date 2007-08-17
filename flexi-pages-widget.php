@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress-plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.1
+Version: 1.1.1
 Author: Srini G
 Author URI: http://srinig.com/
 */
@@ -64,11 +64,13 @@ function flexipages_init()
 						AND post_status = 'publish' 
 						AND post_parent <> 0 ";
 			$subpages = $wpdb->get_results($sql, ARRAY_A);
-			foreach ($subpages as $subpage) { //loop through the sub pages
-				// If the parent of any of the subpage is not in our hierarchy,
-				// add it to the exclusion list
-				if (!in_array($subpage['post_parent'], $hierarchy))
-					$exclude[] = $subpage['ID'];
+			if($subpages) {
+				foreach ($subpages as $subpage) { //loop through the sub pages
+					// If the parent of any of the subpage is not in our hierarchy,
+					// add it to the exclusion list
+					if (!in_array($subpage['post_parent'], $hierarchy))
+						$exclude[] = $subpage['ID'];
+				}
 			}
 			$depth = "";
 		}
