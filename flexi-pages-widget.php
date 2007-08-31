@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress-plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.1
+Version: 1.1.2
 Author: Srini G
 Author URI: http://srinig.com/
 */
@@ -64,11 +64,13 @@ function flexipages_init()
 						AND post_status = 'publish' 
 						AND post_parent <> 0 ";
 			$subpages = $wpdb->get_results($sql, ARRAY_A);
-			foreach ($subpages as $subpage) { //loop through the sub pages
-				// If the parent of any of the subpage is not in our hierarchy,
-				// add it to the exclusion list
-				if (!in_array($subpage['post_parent'], $hierarchy))
-					$exclude[] = $subpage['ID'];
+			if($subpages) {
+				foreach ($subpages as $subpage) { //loop through the sub pages
+					// If the parent of any of the subpage is not in our hierarchy,
+					// add it to the exclusion list
+					if (!in_array($subpage['post_parent'], $hierarchy))
+						$exclude[] = $subpage['ID'];
+				}
 			}
 			$depth = "";
 		}
@@ -77,7 +79,8 @@ function flexipages_init()
 		extract($args);
 		echo $before_widget . $before_title . $title . $after_title . "<ul>\n";
 		if($home_link == 'on') {
-			?><li><a href="<?php bloginfo('home') ?>" title="<?php echo wp_specialchars(get_bloginfo('name'), 1) ?>"><?php _e('Home'); ?></a><?php
+			?><li class="page_item<?php if(is_home()) echo " current_page_item"; ?>"><a href="<?php bloginfo('home') ?>" title="<?php echo wp_specialchars(get_bloginfo('name'), 1) ?>"><?php _e('Home'); ?></a></li>
+<?php
 		}
 		wp_list_pages('title_li=&sort_column='.$sort_column.'&sort_order='.$sort_order.$exclude.$depth);
 		echo "</ul>\n" . $after_widget;
