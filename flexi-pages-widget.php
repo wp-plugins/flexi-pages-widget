@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress-plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.1.2
+Version: 1.2
 Author: Srini G
 Author URI: http://srinig.com/
 */
@@ -38,52 +38,64 @@ function flexipages_init()
 		$exclude = isset($options['exclude'])?explode(',',$options['exclude']):array();
 		$depth = $options['depth'];
 		$home_link = isset($options['home_link'])?$options['home_link']:'on';
+		$home_link_text = $options['home_link_text']?$options['home_link_text']:__('Home');
+		
 		if($depth == 'custom') {
 			if(is_numeric($options['depth_value']))
 				$depth = $options['depth_value'];
 			else
 				$depth = 2;
 		}
-		if($depth == -2)  { 
-		//display subpages only in related pages
+
+		if( ($depth == -2 || $depth == -3) && !is_page() ) $depth = 1;
+
+		if( $depth == -2 )  { // display subpages only in related pages
 		
-			global $post, $wpdb;
+			$hierarchy = flexipages_currpage_hierarchy();
 			
-			// get parents, grandparents of the current page
-			$hierarchy[] = $post->ID;
-			while($post->post_parent) {
-				$post = &get_post($post->post_parent);
-				$hierarchy[] = $post->ID;
+			$subpages = flexipages_get_subpages();
+
+			foreach ($subpages as $subpage) { //loop through the sub pages
+				// if the parent of any of the subpage is not in our hierarchy,
+				// add it to the exclusion list
+				if ( !in_array ($subpage['post_parent'], $hierarchy) )
+					$exclude[] = $subpage['ID'];
 			}
-			
-			// get ids of all sub pages along with the ids of thier parents
+		}
+		else if( $depth == -3 )  { // display subpages only in related pages
+			// depth = -3 gets rid of parents' siblings
 		
-			$sql = "SELECT ID, post_parent FROM ".$wpdb->posts;
-			$sql .= " WHERE 
-						post_type = 'page' 
-						AND post_status = 'publish' 
-						AND post_parent <> 0 ";
-			$subpages = $wpdb->get_results($sql, ARRAY_A);
-			if($subpages) {
-				foreach ($subpages as $subpage) { //loop through the sub pages
-					// If the parent of any of the subpage is not in our hierarchy,
-					// add it to the exclusion list
-					if (!in_array($subpage['post_parent'], $hierarchy))
-						$exclude[] = $subpage['ID'];
+			$hierarchy = flexipages_currpage_hierarchy();
+			
+			$subpages = flexipages_get_subpages();
+						
+			foreach ($subpages as $subpage) { //loop through the sub pages
+				if (
+					( $subpage['post_parent'] != $hierarchy[0] ) &&
+					( $subpage['post_parent'] != $hierarchy[1] ) &&
+					( !in_array ($subpage['ID'], $hierarchy) ) 
+				) {
+					$exclude[] = $subpage['ID'];
 				}
 			}
-			$depth = "";
 		}
-		else $depth = "&depth=".$depth;
+		else $depth_option = "&depth=".$depth;
+
 		if($exclude = implode(',', $exclude)) $exclude = "&exclude=".$exclude;
+
 		extract($args);
+
 		echo $before_widget . $before_title . $title . $after_title . "<ul>\n";
+
 		if($home_link == 'on') {
-			?><li class="page_item<?php if(is_home()) echo " current_page_item"; ?>"><a href="<?php bloginfo('home') ?>" title="<?php echo wp_specialchars(get_bloginfo('name'), 1) ?>"><?php _e('Home'); ?></a></li>
+			?><li class="page_item<?php if(is_home()) echo " current_page_item"; ?>"><a href="<?php bloginfo('home') ?>" title="<?php echo wp_specialchars(get_bloginfo('name'), 1) ?>"><?php echo $home_link_text; ?></a></li>
 <?php
 		}
-		wp_list_pages('title_li=&sort_column='.$sort_column.'&sort_order='.$sort_order.$exclude.$depth);
+
+		wp_list_pages('title_li=&sort_column='.$sort_column.'&sort_order='.$sort_order.$exclude.$depth_option);
+
 		echo "</ul>\n" . $after_widget;
+
 	}
 	
 	function flexipages_widget_control()
@@ -91,7 +103,7 @@ function flexipages_init()
 		global $wpdb;
 		
 		// default options
-		$options = array('title' => 'Pages', 'sort_column' => 'post_title', 'sort_order' => 'ASC', 'exclude' => '', 'depth' => -2, 'depth_value' => 2, 'home_link' => 'on');
+		$options = array('title' => __('Pages'), 'sort_column' => 'post_title', 'sort_order' => 'ASC', 'exclude' => '', 'depth' => -2, 'depth_value' => 2, 'home_link' => 'on', 'home_link_text' => __('Home'));
 		
 		$saved_options = get_option('flexipages');
 		if(is_array($saved_options))	
@@ -108,6 +120,9 @@ function flexipages_init()
 			if($options['depth'] != 'custom' || !is_numeric($options['depth_value']))
 				$options['depth_value'] = 2;
 			$options['home_link'] = ($_REQUEST['flexipages_home_link'] == 'on')?'on':'off';
+			if( !($options['home_link_text'] = strip_tags( stripslashes($_REQUEST['flexipages_home_link_text']) ) ) ){
+				$options['home_link_text'] = __('Home');
+			}
 			update_option('flexipages', $options);
 		}
 	      $sort_column_select[$options['sort_column']]
@@ -151,8 +166,13 @@ function flexipages_init()
 </tr>
 
 <tr>
-	<td valign="top"><label for="flexipages_home_link">Link to home page?</label></td>
+	<td><label for="flexipages_home_link">Link to home page?</label></td>
 	<td><input type="checkbox" id="flexipages_home_link" name="flexipages_home_link"<?php echo $home_link_check; ?> /></td>
+</tr>
+
+<tr>
+	<td><label for="flexipages_home_link_text">Home page link text</label></td>
+	<td><input type="text" name="flexipages_home_link_text" id ="flexipages_home_link_text" value="<?php echo htmlspecialchars($options['home_link_text'], ENT_QUOTES); ?>" /></td>
 </tr>
 
 <tr>
@@ -161,7 +181,7 @@ function flexipages_init()
 	<tr><td><input type="radio" name="flexipages_depth" id="flexipages_depth-1" value="-1"<?php echo $depth_check[-1]; ?> /></td><td><label for="flexipages_depth-1">List all pages and sub-pages in flat (no-indent) form.</label></td></tr>
 	<tr><td><input type="radio" name="flexipages_depth" id="flexipages_depth1" value="1"<?php echo $depth_check[1]; ?> /></td><td><label for="flexipages_depth1">List top level pages only. Don't list subpages.</label></td></tr>
 	<tr><td><input type="radio" name="flexipages_depth" id="flexipages_depth-2" value="-2"<?php echo $depth_check[-2]; ?> /></td><td><label for="flexipages_depth-2">List sub-pages only in parent and related pages in hierarchy.</label></td></tr>
-	<tr><td><input type="radio" name="flexipages_depth" id="flexipages_depth_custom" value="custom"<?php echo $depth_check['custom']; ?> /></td><td><label for="flexipages_depth_custom">Custom depth level</label> (number) <input type="text" name="flexipages_depth_value" id="flexipages_depth_value" value="<?php echo $options['depth_value'] ?>" size="1" maxlength="1" /></td></tr>
+	<tr><td><input type="radio" name="flexipages_depth" id="flexipages_depth_custom" value="custom"<?php echo $depth_check['custom']; ?> /></td><td><label for="flexipages_depth_custom">Custom depth level</label> (number) <input type="text" name="flexipages_depth_value" id="flexipages_depth_value" value="<?php echo $options['depth_value'] ?>" size="2" maxlength="2" onclick="document.getElementById('flexipages_depth_custom').checked = true;" /></td></tr>
 	</table>
 	</td>
 </tr>
@@ -169,9 +189,43 @@ function flexipages_init()
 
 </table>
 <input type="hidden" name="flexipages_submit" value="1" />
-<p style="font-size:0.8em;font-style:italic"><a href="http://srinig.com/wordpress-plugins/flexi-pages/">Flexi Pages widget</a> by Srini G</p>
+
 <?php
 	}
+	
+	function flexipages_currpage_hierarchy()
+	{
+		if( !is_page() )
+			return array();
+			
+		global $post;
+
+		$curr_page = $post;
+
+		// get parents, grandparents of the current page
+		$hierarchy[] = $curr_page->ID;
+		while($curr_page->post_parent) {
+			$curr_page = &get_post($curr_page->post_parent);
+			$hierarchy[] = $curr_page->ID;
+		}
+		return $hierarchy;
+	}
+
+	function flexipages_get_subpages()
+	{
+		global $wpdb;
+		$sql = "SELECT ID, post_title, post_parent FROM ".$wpdb->posts;
+		$sql .= " WHERE 
+			post_type = 'page' 
+			AND post_status = 'publish' 
+			AND post_parent <> 0 ";
+
+		if($subpages = $wpdb->get_results($sql, ARRAY_A))
+			return $subpages;
+
+		else return array();
+	}
+
 
 	//function adapted from wp-admin/admin-functions.php/function parent_dropdown()
 	function flexipages_exclude_options(
@@ -201,7 +255,7 @@ function flexipages_init()
 	}
 
 	register_sidebar_widget(array('Flexi Pages', 'widgets'), 'flexipages_widget');
-	register_widget_control('Flexi Pages', 'flexipages_widget_control', 400, 420);
+	register_widget_control('Flexi Pages', 'flexipages_widget_control', 400, 430);
 }
 
 add_action('plugins_loaded', 'flexipages_init');

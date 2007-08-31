@@ -3,7 +3,7 @@ Contributors: SriniG
 Donate link: http://srinig.com/wordpress-plugins/flexi-pages/#donate
 Tags: pages, subpages, menu, hierarchy, sidebar, widget, navigation
 Requires at least: 2.1
-Tested up to: 2.2.2
+Tested up to: 2.3-beta1
 Stable tag: trunk
 
 A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
@@ -14,10 +14,12 @@ Flexi Pages Widget is a highly configurable WordPress sidebar widget to list pag
 
 Features:
 
-* Option to include a link to home page
-* Option to list sub-pages only in parent page and related pages (screenshots 2, 3)
-* Other options include title, sort column/order, option to exclude certain pages from getting listed, display and depth options
-* User friendly widget control panel.
+* Includes a link to the home page if this option is selected.
+* Option to display sub-pages only in parent page and related pages.
+* Option to select and exclude certain pages from getting displayed in the list.
+* Other options include title, sort column/order, text to be displayed for home page link, display and depth options
+
+Visit the ['Flexi Pages Widget' plugin page](http://srinig.com/wordpress-plugins/flexi-pages/ "'Flexi Pages Widget' for WordPress") for more details.
 
 == Installation ==
 
@@ -27,13 +29,21 @@ Features:
 
 == Frequently Asked Questions ==
 
+= After selecting a few pages for exclusion, isn't it possible to deselect all pages? There is always one page selected for exclusion. =
+
+It is possible to deselect all pages. Hold the 'Ctrl' key in your keyboard and click on the name of the page that's not getting deselected.
+
+= When the option "List sub-pages only in parent and related pages in hierarchy" is selected, top level pages, children and siblings of the current page, and siblings of the parent page get listed. Is it possible to get rid of siblings of parent page on a subpage while using this option? =
+
+Yes. But you have to select the 'Custom depth level' option to achieve this. Enter the number '-3' for custom depth. This way only top level pages and pages in the hierarchy will show up.
+
 = Where do I ask a question about the plugin? =
 
-Put your question/support request/suggestion as a comment at the [plugin page](http://srinig.com/wordpress-plugins/flexi-pages/ "Flexi Pages Widget") or through contact form at the author's [website](http://srinig.com). Questions frequently asked will be incorporated into the FAQ section in future versions of the plugin.
+Leave your questions, suggestions, bug reports, etc., as a comment at the [plugin page](http://srinig.com/wordpress-plugins/flexi-pages/ "Flexi Pages Widget") or through [contact form](http://srinig.com/contact/) at the author's website. Questions frequently asked will be incorporated into the FAQ section in future versions of the plugin.
 
 == Screenshots ==
 
 1. Controls for the Flexi Pages Widget
-2. Screenshot of the pages listed on the home page when 'List sub-pages only in parent and related pages in the hierarchy' option is selected.
-3. Screenshot of the pages listed on a page having sub pages. You can see the sub-pages expand here while only top level pages are listed in the home page. Same settings as screenshot 2.
+2. Screenshot of the pages listed on the *home page* when *List sub-pages only in parent and related pages in the hierarchy* option is selected.
+3. Screenshot of the pages listed on a *page having sub pages*. You can see the sub-pages expand here while only top level pages are listed in the home page. Same settings as screenshot 2.
 
