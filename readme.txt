@@ -14,7 +14,7 @@ Flexi Pages Widget is a highly configurable WordPress sidebar widget to list pag
 
 Features:
 
-* Includes a link to the home page if this option is selected.
+* Includes a link to the home page (if this option is selected).
 * Option to display sub-pages only in parent page and related pages.
 * Option to select and exclude certain pages from getting displayed in the list.
 * Other options include title, sort column/order, text to be displayed for home page link, display and depth options
