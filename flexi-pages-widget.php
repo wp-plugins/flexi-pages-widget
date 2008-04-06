@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.3
+Version: 1.4
 Author: Srini G
 Author URI: http://srinig.com/
 */
@@ -27,16 +27,26 @@ Author URI: http://srinig.com/
 
 function flexipages_options_default()
 {
-	return array('title' => __('Pages'), 'sort_column' => 'menu_order', 'sort_order' => 'ASC', 'exinclude' => 'exclude', 'exinclude_values' => '', 'depth' => -2, 'depth_value' => 2, 'home_link' => 'on', 'home_link_text' => __('Home'));
+	return array('title' => __('Pages'), 'sort_column' => 'menu_order', 'sort_order' => 'ASC', 'exinclude' => 'exclude', 'exinclude_values' => '', 'depth' => -2, 'depth_value' => 2, 'home_link' => __('Home'));
 }
+
+function flexipages_wp_head()
+{
+	global $post;
+	global $flexipages_post;
+	$flexipages_post = $post;
+}
+
+add_action('wp_head', 'flexipages_wp_head');
 
 function flexipages_currpage_hierarchy()
 {
 	if( !is_page() )
 		return array();
 		
-	global $post;
-	$curr_page = $post;
+	global $flexipages_post;
+	$curr_page = $flexipages_post;
+
 	// get parents, grandparents of the current page
 	$hierarchy[] = $curr_page->ID;
 	while($curr_page->post_parent) {
@@ -178,16 +188,17 @@ function flexipages_init()
 		if(!$options[$number]) {
 			$options[$number] = flexipages_options_default();
 		}
+
 		extract($options[$number]);
 		if($exinclude == 'include')
 			$include = $exinclude_values;
 		else
 			$exclude = $exinclude_values;
-		if($home_link == 'on')
-			$home_link = $home_link_text?$home_link_text:__('Home');
-		else
+		if(!$home_link || $home_link == 'off')
 			$home_link = "";
-
+		else if($home_link == 'on')
+			$home_link = $home_link_text?$home_link_text:__('Home');
+		
 		if($depth == 'custom') {
 			if(is_numeric($depth_value))
 				$depth = $depth_value;
@@ -234,10 +245,7 @@ function flexipages_init()
 			$newoptions[$number]['depth_value'] = strip_tags(stripslashes($_REQUEST["flexipages_depth_value-{$number}"]));
 			if($newoptions[$number]['depth'] != 'custom' || !is_numeric($newoptions[$number]['depth_value']))
 				$newoptions[$number]['depth_value'] = 2;
-			$newoptions[$number]['home_link'] = ($_REQUEST["flexipages_home_link-{$number}"] == 'on')?'on':'off';
-			if( !($newoptions[$number]['home_link_text'] = strip_tags( stripslashes($_REQUEST["flexipages_home_link_text-{$number}"]) ) ) ){
-				$newoptions[$number]['home_link_text'] = __('Home');
-			}
+			$newoptions[$number]['home_link'] = strip_tags( stripslashes($_REQUEST["flexipages_home_link-{$number}"]) );
 		}
 		if ( $options != $newoptions ) {
 			$options = $newoptions;
@@ -250,17 +258,20 @@ function flexipages_init()
         $exinclude_select[$options[$number]['exinclude']]
         	=' selected="selected"';
         $depth_check[$options[$number]['depth']] = ' checked="checked"';
-        $home_link_check = ($options[$number]['home_link'] == 'on')?' checked="checked"':'';
+       if($options[$number]['home_link'] == 'on')
+ 	      	$options[$number]['home_link'] = $options[$number]['home_link_text']?$options[$number]['home_link_text']:__('Home');
+        else if($options[$number]['home_link'] == 'off')
+	       	$options[$number]['home_link'] = "";
 		// Display widget options menu
   ?>
 <table cellpadding="5px">
 <tr>
 	<td valign="top"><label for="flexipages_title-<?php echo $number; ?>">Title</label></td>
-	<td><input type="text" id="flexipages_title-<?php echo $number; ?>" name="flexipages_title-<?php echo $number; ?>" value="<?php  echo htmlspecialchars($options[$number]['title'], ENT_QUOTES) ?>" /></td>
+	<td><input class="widefat" type="text" id="flexipages_title-<?php echo $number; ?>" name="flexipages_title-<?php echo $number; ?>" value="<?php  echo htmlspecialchars($options[$number]['title'], ENT_QUOTES) ?>" /></td>
 </tr>
 <tr>
 	<td valign="top" width="40%"><label for="flexipages_sort_column-<?php echo $number; ?>">Sort by</label></td>
-	<td valign="top" width="60%"><select name="flexipages_sort_column-<?php echo $number; ?>" id="flexipages_sort_column-<?php echo $number; ?>">
+	<td valign="top" width="60%"><select class="widefat" style="display:inline;width:auto;" name="flexipages_sort_column-<?php echo $number; ?>" id="flexipages_sort_column-<?php echo $number; ?>">
 			<option value="post_title"<?php echo $sort_column_select['post_title']; ?>>Page title</option>
 			<option value="menu_order"<?php echo $sort_column_select['menu_order']; ?>>Menu order</option>
 			<option value="post_date"<?php echo $sort_column_select['post_date']; ?>>Date created</option>
@@ -269,7 +280,7 @@ function flexipages_init()
 			<option value="post_author"<?php echo $sort_column_select['post_author']; ?>>Page author ID</option>
 			<option value="post_name"<?php echo $sort_column_select['post_name']; ?>>Page slug</option>
 		</select>
-		<select name="flexipages_sort_order-<?php echo $number; ?>" id="flexipages_sort_order-<?php echo $number; ?>">
+		<select class="widefat" style="display:inline;width:auto;" name="flexipages_sort_order-<?php echo $number; ?>" id="flexipages_sort_order-<?php echo $number; ?>">
 			<option<?php echo $sort_order_select['ASC']; ?>>ASC</option>
 			<option<?php echo $sort_order_select['DESC']; ?>>DESC</option>
 		</select>
@@ -279,25 +290,20 @@ function flexipages_init()
 
 <tr>
 	<td valign="top">
-	<select name="flexipages_exinclude-<?php echo $number; ?>" id="flexipages_exinclude-<?php echo $number; ?>">
+	<select class="widefat" style="display:inline;width:auto;" name="flexipages_exinclude-<?php echo $number; ?>" id="flexipages_exinclude-<?php echo $number; ?>">
 		<option value="exclude"<?php echo $exinclude_select['exclude']; ?>>Exclude</option>
 		<option value="include"<?php echo $exinclude_select['include']; ?>>Include</option>
-	</select> pages
+	</select> <label for="flexipages_exinclude_values-<?php echo $number; ?>">pages</label>
 	</td>
-	<td><select name="flexipages_exinclude_values-<?php echo $number; ?>[]" id="flexipages_exinclude_values-<?php echo $number; ?>" multiple="multiple" size="4">
+	<td><select class="widefat" style="height:auto;max-height:6em" name="flexipages_exinclude_values-<?php echo $number; ?>[]" id="flexipages_exinclude_values-<?php echo $number; ?>" multiple="multiple" size="4">
 <?php flexipages_exinclude_options($options[$number]['sort_column'], $options[$number]['sort_order'], explode(',', $options[$number]['exinclude_values']),0,0); ?>
 	</select>
-	<br /><small>(use &lt;Ctrl&gt; key to select multiple pages)</small></td>
+	<small>use &lt;Ctrl&gt; key to select multiple pages</small></td>
 </tr>
 
 <tr>
-	<td><label for="flexipages_home_link-<?php echo $number; ?>">Link to home page?</label></td>
-	<td><input type="checkbox" id="flexipages_home_link-<?php echo $number; ?>" name="flexipages_home_link-<?php echo $number; ?>"<?php echo $home_link_check; ?> /></td>
-</tr>
-
-<tr>
-	<td><label for="flexipages_home_link_text-<?php echo $number; ?>">Home page link text</label></td>
-	<td><input type="text" name="flexipages_home_link_text-<?php echo $number; ?>" id ="flexipages_home_link_text-<?php echo $number; ?>" value="<?php echo htmlspecialchars($options[$number]['home_link_text'], ENT_QUOTES); ?>" /></td>
+	<td valign="top"><label for="flexipages_home_link-<?php echo $number; ?>">Home page link text</label></td>
+	<td><input class="widefat" type="text" name="flexipages_home_link-<?php echo $number; ?>" id ="flexipages_home_link-<?php echo $number; ?>" value="<?php echo htmlspecialchars($options[$number]['home_link'], ENT_QUOTES); ?>" /><small>leave this blank to hide home page link</small></td>
 </tr>
 
 <tr>

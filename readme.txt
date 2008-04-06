@@ -3,7 +3,7 @@ Contributors: SriniG
 Donate link: http://srinig.com/wordpress/plugins/flexi-pages/#donate
 Tags: pages, subpages, menu, hierarchy, sidebar, widget, navigation
 Requires at least: 2.1
-Tested up to: 2.3.3
+Tested up to: 2.5
 Stable tag: trunk
 
 A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
@@ -14,12 +14,12 @@ Flexi Pages Widget is a highly configurable WordPress sidebar widget to list pag
 
 Features:
 
-* Includes a link to the home page (if this option is selected).
 * Option to display sub-pages only in parent page and related pages.
 * Option to select and exclude certain pages from getting displayed in the list. Alternatively, only certain pages can be displayed by using the 'include' option.
-* Other options include title, sort column/order, text to be displayed for home page link, display and depth options
-* Multiple instances of the widget -- you can have upto nine instances of the widget
-* Instead of using the widget, the function flexipages() can be called from anywhere in the template (see [other notes](http://wordpress.org/extend/plugins/flexi-pages-widget/other-notes/) for information on parameters that can be passed into this function).
+* Option to include a link to the home page.
+* Other options include title, sort column/order, display and depth options.
+* Multiple instances of the widget. Upto nine instances of the widget can be added to the sidebar.
+* Instead of using the widget, the function flexipages() can be called from anywhere in the template (see [other notes](http://wordpress.org/extend/plugins/flexi-pages-widget/other_notes/) for information on parameters that can be passed into this function).
 
 If you are using WordPress version 2.1 series, you will have to download and activate [Sidebar Widgets plugin](http://wordpress.org/extend/plugins/widgets/), and use a widget compatible theme before you can use the Flexi Pages *Widget*. 
 
@@ -50,10 +50,8 @@ Leave your questions, suggestions, bug reports, etc., as a comment at the [plugi
 
 == Screenshots ==
 
-1. Controls for the Flexi Pages Widget
+1. Controls for the Flexi Pages Widget (in WP 2.5)
 2. Upto nine instances of the Flexi Pages widget can be added to the sidebar
-3. Screenshot of the pages listed on the *home page* when *List sub-pages only in parent and related pages in the hierarchy* option is selected.
-4. Screenshot of the pages listed on a *page having sub pages*. You can see the sub-pages expand here while only top level pages are listed in the home page. Same settings as screenshot 2.
 
 == The flexipages() template function ==
 
@@ -77,6 +75,10 @@ If a value is specified for this parameter, a link to the home page of the blog 
 In addition to the above two, [all other parameters](http://codex.wordpress.org/wp_list_pages#Parameters) used with `wp_list_pages()` can also be used with flexipages(). Refer [WordPress documentation](http://codex.wordpress.org/wp_list_pages) for more details about the `wp_list_pages()` function and to know about how to pass the parameters into the function.
 
 == Changelog ==
+* 2008-04-06: Version 1.4
+	* Fixed the odd behaviour when the widget is placed below the recent posts widget.
+	* Removed the redundant check box for home page link in widget controls
+	* Tested with WordPress 2.5; widget control box styling compatible with WP 2.5
 * 2008-02-19: Version 1.3
 	* Multiple instances of the widget
 	* Added 'Include pages' option
@@ -88,7 +90,7 @@ In addition to the above two, [all other parameters](http://codex.wordpress.org/
 	* Few other improvements and some optimization.
 	* Tested with WordPress 2.3-beta1.
 * 2007-08-22: Version 1.1.2
-	* Fixed the missing `&lt;/li&gt;` tag for home link
+	* Fixed the missing `</li>` tag for home link
 	* Added class name (`page_item`, `current_page_item`) for home link
 * 2007-08-17: Version 1.1.1
 	* bug fix
