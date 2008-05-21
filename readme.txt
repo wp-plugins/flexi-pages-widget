@@ -3,7 +3,7 @@ Contributors: SriniG
 Donate link: http://srinig.com/wordpress/plugins/flexi-pages/#donate
 Tags: pages, subpages, menu, hierarchy, sidebar, widget, navigation
 Requires at least: 2.1
-Tested up to: 2.5
+Tested up to: 2.5.1
 Stable tag: trunk
 
 A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
@@ -75,6 +75,8 @@ If a value is specified for this parameter, a link to the home page of the blog 
 In addition to the above two, [all other parameters](http://codex.wordpress.org/wp_list_pages#Parameters) used with `wp_list_pages()` can also be used with flexipages(). Refer [WordPress documentation](http://codex.wordpress.org/wp_list_pages) for more details about the `wp_list_pages()` function and to know about how to pass the parameters into the function.
 
 == Changelog ==
+* 2008-05-21: Version 1.4.1
+	* Bug fixes (issues regarding include/exclude sub-pages only with 'List sub-pages only in parent and related pages in hierarchy' option selected.)
 * 2008-04-06: Version 1.4
 	* Fixed the odd behaviour when the widget is placed below the recent posts widget.
 	* Removed the redundant check box for home page link in widget controls

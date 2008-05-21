@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.4
+Version: 1.4.1
 Author: Srini G
 Author URI: http://srinig.com/
 */
@@ -71,6 +71,12 @@ function flexipages_get_subpages()
 	else return array();
 }
 
+function flexipages_pageids()
+{
+	global $wpdb;
+	$page_ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish'" );
+	return $page_ids;
+}
 
 //function adapted from wp-admin/admin-functions.php/function parent_dropdown()
 function flexipages_exinclude_options(
@@ -114,7 +120,7 @@ function flexipages($options = '')
 		$exclude = array();
 	
 	
-	if( $options['depth'] == -2 || !$options['depth'])  { // display subpages only in related pages
+	if( $options['depth'] == -2 || !isset($options['depth']))  { // display subpages only in related pages
 		
 		$hierarchy = flexipages_currpage_hierarchy();
 			
@@ -147,9 +153,21 @@ function flexipages($options = '')
 		$options['depth'] = 0;
 	}
 
+
+		
+	if($options['include']) {
+		$include = explode(',', $options['include']);
+		$page_ids = flexipages_pageids();
+		foreach($page_ids as $page_id) {
+			if(!in_array($page_id, $include) && !in_array($page_id, $exclude))
+				$exclude[] = $page_id;
+		}
+		$options['include'] = '';	
+	}
+
 	if($exclude)
 		$options['exclude'] = implode(',', $exclude);
-	
+
 	if($options['title_li']) {
 		$title_li = $options['title_li'];
 		$options['title_li'] = "";
@@ -170,7 +188,7 @@ function flexipages($options = '')
 
 	$display .= wp_list_pages('echo=0&'.$opts);
 	
-	if($title_li) 
+	if($title_li && $display) 
 		$display = "<li class=\"pagenav\">".$title_li."<ul>\n".$display."</ul></li>";
 	if(isset($options['echo']) && $options['echo'] == 0)
 		return $display;
@@ -206,19 +224,19 @@ function flexipages_init()
 				$depth = 2;
 		}
 
-		if( ($depth == -2 || $depth == -3) && !is_page() ) $depth = 1;
-
 		extract($args);
 
-		echo $before_widget;
-		if($title)
-			echo $before_title . $title . $after_title;
-		echo "<ul>\n";
+		if($pagelist = flexipages('echo=0&title_li=&sort_column='.$sort_column.'&sort_order='.$sort_order.'&include='.$include.'&exclude='.$exclude.'&depth='.$depth.'&home_link='.$home_link)) {
 		
-		flexipages('title_li=&sort_column='.$sort_column.'&sort_order='.$sort_order.'&exclude='.$exclude.'&include='.$include.'&depth='.$depth.'&home_link='.$home_link);
+			echo $before_widget;
+			if($title)
+				echo $before_title . $title . $after_title;
+			echo "<ul>\n";
+			
+			echo $pagelist;
 
-		echo "</ul>\n" . $after_widget;
-
+			echo "</ul>\n" . $after_widget;
+		}
 	}
 	
 	function flexipages_widget_control($number)
