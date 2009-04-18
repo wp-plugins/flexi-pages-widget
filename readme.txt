@@ -19,7 +19,7 @@ Features:
 * Option to include a link to the home page.
 * Other options include title, sort column/order, hierarchical/flat format, show date.
 * Multiple instances of the widget. Unlimited number of instances of the widget can be added to the sidebar.
-* Instead of using the widget, the function flexipages() can be called from anywhere in the template. All parameters that can be passed on to [`wp_page_menu()`](http://codex.wordpress.org/Template_Tags/wp_page_menu) and [`wp_list_pages()`](http://codex.wordpress.org/Template_Tags/wp_list_pages) can be passed into the flexipages() template function..
+* Instead of using the widget, the function flexipages() can be called from anywhere in the template. All parameters that can be passed on to [`wp_page_menu()`](http://codex.wordpress.org/Template_Tags/wp_page_menu) and [`wp_list_pages()`](http://codex.wordpress.org/Template_Tags/wp_list_pages) can be passed into the flexipages() template function.
 
 == Installation ==
 
@@ -46,6 +46,14 @@ Although such an option does not exist, the 'Include' option can be used to achi
 = Is it possible to display only the child-pages of a particular page? =
 Yes. In order to achieve this, select the 'Include' option, select just the child-pages to be listed (leave out all other pages), enable the 'Show subpages' option and select 'Show all sub-pages'.
 
+= The widget treats a password protected page as any other page. Is there were a way to restrict the widget from showing password protected items until the password has been entered? =
+
+The built-in WP template functions `wp_page_menu()` and `wp_list_pages()` treat password protected pages as any other page, and don't have an option to hide password protected pages until the password is entered. Flexi Pages Widget plugin depends on these functions, and until these functions provide an option to hide password protected pages, we can't have it either.
+
+= The widget doesn't list private pages at all. Is there a way to show private pages when the admin is logged in? =
+
+The built-in WP template functions `wp_page_menu()` and `wp_list_pages()` doesn't list private pages and doesn't have an option to show private pages. Flexi Pages Widget plugin depends on these functions, and until these functions provide an option to show private pages when the admin is logged in, it's not possible for us to show private pages.
+
 = Where do I ask a question about the plugin? =
 
 Leave your questions, suggestions, bug reports, etc., as a comment at the [plugin page](http://srinig.com/wordpress-plugins/flexi-pages/ "Flexi Pages Widget") or through [contact form](http://srinig.com/contact/) at the author's website. Questions frequently asked will be incorporated into the FAQ section in future versions of the plugin.
@@ -55,6 +63,9 @@ Leave your questions, suggestions, bug reports, etc., as a comment at the [plugi
 1. Controls for the Flexi Pages Widget
 
 == Changelog ==
+* **2009-04-18: Version 1.5.1**
+	* Bug fix. Title now doesn't show when there is no items in the list.
+	* Frequently asked queries about private pages and password protected pages answered in FAQ.
 * **2009-04-07: Version 1.5**
 	* *Unlimited* instances of the Flexi Pages Widget can be added to the sidebar.
 	* New option to show date. This option, when selected displays creation or last modified date next to each page.

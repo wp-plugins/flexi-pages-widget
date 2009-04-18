@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.5
+Version: 1.5.1
 Author: Srini G
 Author URI: http://srinig.com/
 */
@@ -193,6 +193,9 @@ function flexipages($args='')
 	
 	if(!$options['date_format'])
 		$options['date_format'] = get_option('date_format');
+		
+	if(!$options['menu_class'])
+		$options['menu_class'] = 'menu';
 
 
 	foreach($options as $key => $value) {
@@ -208,7 +211,7 @@ function flexipages($args='')
 	$display .= wp_page_menu('echo=0&'.$opts);
 	
 
-	if($title_li && $display) 
+	if($title_li && $display && trim($display) != '<div class="'.$options['menu_class'].'"></div>')  
 		$display = "<li class=\"pagenav\">".$title_li."<ul>\n".$display."</ul></li>";
 
 	if(isset($options['echo']) && $options['echo'] == 0)
@@ -259,12 +262,13 @@ function flexipages_init()
 		else if ($show_home_check == on && !$show_home)
 			$show_home = __('Home');
 			
+			
 
-		if($pagelist = flexipages('echo=0&title_li=&sort_column='.$sort_column.'&sort_order='.$sort_order.'&include='.$include.'&exclude='.$exclude.'&depth='.$depth.'&show_home='.$show_home.'&show_date='.$show_date.'&date_format='.$date_format.'&show_subpages='.$show_subpages)) {
+		if($pagelist = flexipages('echo=0&title_li=&sort_column='.$sort_column.'&sort_order='.$sort_order.'&include='.$include.'&exclude='.$exclude.'&depth='.$depth.'&show_home='.$show_home.'&show_date='.$show_date.'&date_format='.$date_format.'&show_subpages='.$show_subpages.'&menu_class=menu')) {
 		
 			echo $before_widget;
 
-			if($title)
+			if($title && $pagelist && trim($pagelist) != '<div class="menu"></div>')
 				echo $before_title . $title . $after_title;
 
 			echo $pagelist;
