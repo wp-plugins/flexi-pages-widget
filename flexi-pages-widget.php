@@ -3,9 +3,9 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.5.1
+Version: 1.5.2
 Author: Srini G
-Author URI: http://srinig.com/
+Author URI: http://srinig.com/wordpress
 */
 
 /*  Copyright 2007 Srini G (email : srinig.com@gmail.com)
@@ -424,7 +424,7 @@ function flexipages_init()
 			</tr>
 			<tr>
 			<td style="padding:5px 0;"><label for="flexipages-show_date-<?php echo $number; ?>"><input type="checkbox" class="checkbox" id="flexipages-show_date-<?php echo $number; ?>" name="flexipages_widget[<?php echo $number; ?>][show_date]" onchange="if(this.checked) { getElementById('flexipages-date_format-<?php echo $number; ?>').style.display='block'; } else { getElementById('flexipages-date_format-<?php echo $number; ?>').style.display='none'; }"<?php echo $show_date_check; ?> /> Show date</label></td>
-			<td><select<?php echo $date_format_display; ?> class="widefat" id="flexipages-date_format-<?php echo $number; ?>" name="flexipages_widget[<?php echo $number; ?>][date_format]" text="Select format" />
+			<td><select<?php echo $date_format_display; ?> class="widefat" id="flexipages-date_format-<?php echo $number; ?>" name="flexipages_widget[<?php echo $number; ?>][date_format]" text="Select format">
 				<option value="">Choose Format</option>
 				<?php foreach($date_format_options as $date_format_option) { ?>
 					<option value="<?php echo $date_format_option; ?>"<?php echo $date_format_select[$date_format_option]; ?>><?php echo date($date_format_option); ?></option>
