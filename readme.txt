@@ -3,7 +3,7 @@ Contributors: SriniG
 Donate link: http://srinig.com/wordpress/plugins/flexi-pages/#donate
 Tags: pages, subpages, menu, hierarchy, sidebar, widget, navigation
 Requires at least: 2.7
-Tested up to: 2.8
+Tested up to: 2.8.2
 Stable tag: trunk
 
 A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
@@ -63,6 +63,9 @@ Leave your questions, suggestions, bug reports, etc., as a comment at the [plugi
 1. Controls for the Flexi Pages Widget
 
 == Changelog ==
+
+= v1.5.3 (2009-08-03) =
+* Bug fix: Fixed the behaviour where the list won't appear in the posts page if it's chosen as a sub page (front page as static page)
 
 = v1.5.2 (2009-06-30) =
 * Bug fix (thanks to John J. Camilleri). Must upgrade.

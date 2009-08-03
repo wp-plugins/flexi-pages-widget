@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.5.2
+Version: 1.5.3
 Author: Srini G
 Author URI: http://srinig.com/wordpress
 */
@@ -54,14 +54,21 @@ add_action('wp_head', 'flexipages_wp_head');
 
 function flexipages_currpage_hierarchy()
 {
-	if( !is_page() )
+	if(is_home() && !is_front_page()) {
+		if($curr_page_id = get_option('page_for_posts'))
+			$curr_page = &get_post($curr_page_id);
+	}
+	else if( is_page() ) {
+		global $flexipages_post;
+		$curr_page = $flexipages_post;
+	}
+	else
 		return array();
-		
-	global $flexipages_post;
-	$curr_page = $flexipages_post;
+
 
 	// get parents, grandparents of the current page
 	$hierarchy[] = $curr_page->ID;
+	
 	while($curr_page->post_parent) {
 		$curr_page = &get_post($curr_page->post_parent);
 		$hierarchy[] = $curr_page->ID;
@@ -101,7 +108,6 @@ function flexipages_exinclude_options(
 	$parent = 0,
 	$level = 0 )
 {
-	echo "here";
 	global $wpdb;
 	$items = $wpdb->get_results( "SELECT ID, post_parent, post_title FROM $wpdb->posts WHERE post_parent = $parent AND post_type = 'page' AND post_status = 'publish' ORDER BY {$sort_column} {$sort_order}" );
 
@@ -138,8 +144,10 @@ function flexipages($args='')
 	
 	
 	if( $options['depth'] == -2 || $options['show_subpages'] == -2 || !isset($options['depth']))  { // display subpages only in related pages
+	
 		
 		$hierarchy = flexipages_currpage_hierarchy();
+		
 			
 		$subpages = flexipages_get_subpages();
 
@@ -206,7 +214,6 @@ function flexipages($args='')
 		if($opts) $opts .= '&';
 		$opts .= $key.'='.$value;
 	}
-	
 	
 	$display .= wp_page_menu('echo=0&'.$opts);
 	
