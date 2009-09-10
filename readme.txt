@@ -1,9 +1,9 @@
 === Flexi Pages Widget ===
 Contributors: SriniG
-Donate link: http://srinig.com/wordpress/plugins/flexi-pages/#donate
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8110402
 Tags: pages, subpages, menu, hierarchy, sidebar, widget, navigation
 Requires at least: 2.7
-Tested up to: 2.8.2
+Tested up to: 2.8.4
 Stable tag: trunk
 
 A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
@@ -19,7 +19,10 @@ Features:
 * Option to include a link to the home page.
 * Other options include title, sort column/order, hierarchical/flat format, show date.
 * Multiple instances of the widget. Unlimited number of instances of the widget can be added to the sidebar.
-* Instead of using the widget, the function flexipages() can be called from anywhere in the template. All parameters that can be passed on to [`wp_page_menu()`](http://codex.wordpress.org/Template_Tags/wp_page_menu) and [`wp_list_pages()`](http://codex.wordpress.org/Template_Tags/wp_list_pages) can be passed into the flexipages() template function.
+* Instead of using the widget, the function flexipages() can be called from anywhere in the template. All parameters that can be passed on to [`wp_page_menu()`](http://codex.wordpress.org/Template_Tags/wp_page_menu) (except `menu_class`) and [`wp_list_pages()`](http://codex.wordpress.org/Template_Tags/wp_list_pages) can be passed into the flexipages() template function.
+* Widget options menu is internationalized. (new in 1.5.5)
+
+As of version 1.5.5, Flexi Pages Widget is translated into Russian language by [Fat Cow](http://www.fatcow.com)
 
 == Installation ==
 
@@ -62,7 +65,17 @@ Leave your questions, suggestions, bug reports, etc., as a comment at the [plugi
 
 1. Controls for the Flexi Pages Widget
 
+== Localization ==
+
+Version 1.5.5 supports localization. The localization template file (flexipages.pot) can be found in the 'languages' folder of the plugin. The resulting PO and MO files should go in the 'flexi-pages-widget/languages/' directory, and should be named in the format `flexipages-xx_YY.po` and `flexipages-xx_YY.mo` files respectively. Where xx refers to the language code and YY to the locale. For example, the German translation files will have the name `flexipages-de_DE.po` and `flexipages-de_DE.mo`. This xx_YY should be the same as the value you define for WPLANG in wp-config.php.
+
+An application like [poEdit](http://www.poedit.net/) can be used to translate the plugin, or just translate the strings in the flexipages.pot file and send it to the plugin author. All translations sent to the author will be bundled with the next version of the plugin.
+
 == Changelog ==
+
+= v1.5.5 (2009-09-10) =
+* Support for localization added. Russian localization included.
+* Roll back to `wp_list_pages()` function. Because `wp_page_menu()` seems not to work properly in some themes.
 
 = v1.5.3 (2009-08-03) =
 * Bug fix: Fixed the behaviour where the list won't appear in the posts page if it's chosen as a sub page (front page as static page)
