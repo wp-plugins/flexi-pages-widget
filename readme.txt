@@ -22,7 +22,9 @@ Features:
 * Instead of using the widget, the function flexipages() can be called from anywhere in the template. All parameters that can be passed on to [`wp_page_menu()`](http://codex.wordpress.org/Template_Tags/wp_page_menu) (except `menu_class`) and [`wp_list_pages()`](http://codex.wordpress.org/Template_Tags/wp_list_pages) can be passed into the flexipages() template function.
 * Widget options menu is internationalized. (new in 1.5.5)
 
-As of version 1.5.5, Flexi Pages Widget is translated into Russian language by [Fat Cow](http://www.fatcow.com)
+As of version 1.5.6, Flexi Pages Widget is translated into the following languages:
+* German (de_DE) by [Frank W. Hempel](http://frank-hempel.de/)
+* Russian (ru_RU) by [Fat Cow](http://www.fatcow.com)
 
 == Installation ==
 
@@ -67,11 +69,14 @@ Leave your questions, suggestions, bug reports, etc., as a comment at the [plugi
 
 == Localization ==
 
-Version 1.5.5 supports localization. The localization template file (flexipages.pot) can be found in the 'languages' folder of the plugin. The resulting PO and MO files should go in the 'flexi-pages-widget/languages/' directory, and should be named in the format `flexipages-xx_YY.po` and `flexipages-xx_YY.mo` files respectively. Where xx refers to the language code and YY to the locale. For example, the German translation files will have the name `flexipages-de_DE.po` and `flexipages-de_DE.mo`. This xx_YY should be the same as the value you define for WPLANG in wp-config.php.
+Versions 1.5.5 and above supports localization. The localization template file (flexipages.pot) can be found in the 'languages' folder of the plugin. The resulting PO and MO files should go in the 'flexi-pages-widget/languages/' directory, and should be named in the format `flexipages-xx_YY.po` and `flexipages-xx_YY.mo` files respectively. Where xx refers to the language code and YY to the locale. For example, the German translation files will have the name `flexipages-de_DE.po` and `flexipages-de_DE.mo`. This xx_YY should be the same as the value you define for WPLANG in wp-config.php.
 
 An application like [poEdit](http://www.poedit.net/) can be used to translate the plugin, or just translate the strings in the flexipages.pot file and send it to the plugin author. All translations sent to the author will be bundled with the next version of the plugin.
 
 == Changelog ==
+
+= v1.5.6 (2009-09-14) =
+* German localization added.
 
 = v1.5.5 (2009-09-10) =
 * Support for localization added. Russian localization included.
