@@ -22,9 +22,10 @@ Features:
 * Instead of using the widget, the function flexipages() can be called from anywhere in the template. All parameters that can be passed on to [`wp_page_menu()`](http://codex.wordpress.org/Template_Tags/wp_page_menu) (except `menu_class`) and [`wp_list_pages()`](http://codex.wordpress.org/Template_Tags/wp_list_pages) can be passed into the flexipages() template function.
 * Widget options menu is internationalized. (new in 1.5.5)
 
-As of version 1.5.6, Flexi Pages Widget is translated into the following languages:
+As of version 1.5.7, Flexi Pages Widget is translated into the following languages:
 * German (de_DE) by [Frank W. Hempel](http://frank-hempel.de/)
 * Russian (ru_RU) by [Fat Cow](http://www.fatcow.com)
+* Ukrainian (uk_UA) by [wpp.pp.ua](http://wpp.pp.ua/)
 
 == Installation ==
 
@@ -74,6 +75,10 @@ Versions 1.5.5 and above supports localization. The localization template file (
 An application like [poEdit](http://www.poedit.net/) can be used to translate the plugin, or just translate the strings in the flexipages.pot file and send it to the plugin author. All translations sent to the author will be bundled with the next version of the plugin.
 
 == Changelog ==
+
+= v1.5.7 (2009-09-22) =
+* Ukrainian localization added
+* Support for user defined widget arguments before_pagelist and after_pagelist
 
 = v1.5.6 (2009-09-14) =
 * German localization added.

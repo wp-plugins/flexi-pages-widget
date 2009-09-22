@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.5.6
+Version: 1.5.7
 Author: Srini G
 Author URI: http://srinig.com/wordpress
 */
@@ -209,7 +209,7 @@ function flexipages($args='')
 	}
 
 	foreach($options as $key => $value) {
-		if($key == 'home_link' || $key == 'echo')
+		if($key == 'home_link' || $key  == 'show_home' || $key == 'echo')
 			continue;
 		if($opts) $opts .= '&';
 		$opts .= $key.'='.$value;
@@ -280,7 +280,12 @@ function flexipages_init()
 			if($title && $pagelist)
 				echo $before_title . $title . $after_title;
 
-			echo "<ul>\n". $pagelist . "</ul>\n";
+			echo $before_pagelist."<ul>\n". $pagelist . "</ul>".$after_pagelist."\n";
+			/* 	$before_pagelist and $after_pagelist are widget arguments that 
+				can be defined in the functions.php of your theme.
+				These arguments can be used, for example, if you want to enclose
+				the	pagelist within a <div>.
+			*/
 
 			echo $after_widget;
 		}
