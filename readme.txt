@@ -20,12 +20,7 @@ Features:
 * Other options include title, sort column/order, hierarchical/flat format, show date.
 * Multiple instances of the widget. Unlimited number of instances of the widget can be added to the sidebar.
 * Instead of using the widget, the function flexipages() can be called from anywhere in the template. All parameters that can be passed on to [`wp_page_menu()`](http://codex.wordpress.org/Template_Tags/wp_page_menu) (except `menu_class`) and [`wp_list_pages()`](http://codex.wordpress.org/Template_Tags/wp_list_pages) can be passed into the flexipages() template function.
-* Widget options menu is internationalized. (new in 1.5.5)
-
-As of version 1.5.7, Flexi Pages Widget is translated into the following languages:
-* German (de_DE) by [Frank W. Hempel](http://frank-hempel.de/)
-* Russian (ru_RU) by [Fat Cow](http://www.fatcow.com)
-* Ukrainian (uk_UA) by [wpp.pp.ua](http://wpp.pp.ua/)
+* Widget options menu is internationalized. Please refer [Other Notes](http://wordpress.org/extend/plugins/flexi-pages-widget/other_notes/) for the full list of languages in which the plugin is localized and translation credits.
 
 == Installation ==
 
@@ -74,7 +69,17 @@ Versions 1.5.5 and above supports localization. The localization template file (
 
 An application like [poEdit](http://www.poedit.net/) can be used to translate the plugin, or just translate the strings in the flexipages.pot file and send it to the plugin author. All translations sent to the author will be bundled with the next version of the plugin.
 
+As of version 1.5.8, Flexi Pages Widget is translated into the following languages:
+* German (de_DE) by [Frank W. Hempel](http://frank-hempel.de/)
+* Russian (ru_RU) by [Fat Cow](http://www.fatcow.com)
+* Swedish (sv_SE) by Ove Kaufeldt
+* Turkish (tr_TR) by [Hakan Demiray](http://www.dmry.net/)
+* Ukrainian (uk_UA) by [wpp.pp.ua](http://wpp.pp.ua/)
+
 == Changelog ==
+
+= v1.5.8 (2009-10-01) =
+* Localization in Swedish and Turkish languages added.
 
 = v1.5.7 (2009-09-22) =
 * Ukrainian localization added
