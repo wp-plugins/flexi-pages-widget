@@ -69,8 +69,9 @@ Versions 1.5.5 and above supports localization. The localization template file (
 
 An application like [poEdit](http://www.poedit.net/) can be used to translate the plugin, or just translate the strings in the flexipages.pot file and send it to the plugin author. All translations sent to the author will be bundled with the next version of the plugin.
 
-As of version 1.5.8, Flexi Pages Widget is translated into the following languages:
+As of version 1.5.9, Flexi Pages Widget is translated into the following languages:
 * German (de_DE) by [Frank W. Hempel](http://frank-hempel.de/)
+* Brazilian Portugese (pt_BR) by Tzor More
 * Russian (ru_RU) by [Fat Cow](http://www.fatcow.com)
 * Swedish (sv_SE) by Ove Kaufeldt
 * Turkish (tr_TR) by [Hakan Demiray](http://www.dmry.net/)
@@ -79,7 +80,7 @@ As of version 1.5.8, Flexi Pages Widget is translated into the following languag
 == Changelog ==
 
 = v1.5.8 (2009-10-01) =
-* Localization in Swedish and Turkish languages added.
+* Localization in Brazilian Portugese, Swedish and Turkish languages added.
 
 = v1.5.7 (2009-09-22) =
 * Ukrainian localization added
