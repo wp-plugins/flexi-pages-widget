@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.5.9
+Version: 1.5.10
 Author: Srini G
 Author URI: http://srinig.com/wordpress
 */
@@ -405,7 +405,7 @@ function flexipages_init()
 					<option value="exclude"<?php echo $exinclude_select['exclude']; ?>><?php _e('Exclude', 'flexipages'); ?></option>
 					<option value="include"<?php echo $exinclude_select['include']; ?>><?php _e('Include', 'flexipages'); ?></option>
 				</select><?php _e('pages', 'flexipages'); ?></td>
-				<td><select name="flexipages_widget[<?php echo $number; ?>][exinclude_values][]" id="flexipages-exinclude_values-<?php echo $number; ?> class="widefat" style="height:auto;max-height:6em" multiple="multiple" size="4">
+				<td><select name="flexipages_widget[<?php echo $number; ?>][exinclude_values][]" id="flexipages-exinclude_values-<?php echo $number; ?>" class="widefat" style="height:auto;max-height:6em" multiple="multiple" size="4">
 					<?php flexipages_exinclude_options($options[$number]['sort_column'], $options[$number]['sort_order'], explode(',', $options[$number]['exinclude_values']),0,0) ?>
 				</select><br />
 				<small class="setting-description"><?php _e('use &lt;Ctrl&gt; key to select multiple pages', 'flexipages'); ?></small>
