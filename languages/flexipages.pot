@@ -1,0 +1,130 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Flexi Pages Widget 1.5.5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-03 12:08+0530\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Srinivasan G <srinig.com@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: \n"
+
+#: /flexi-pages-widget.php:36
+msgid "Pages"
+msgstr ""
+
+#: /flexi-pages-widget.php:46
+#: /flexi-pages-widget.php:279
+msgid "Home"
+msgstr ""
+
+#: /flexi-pages-widget.php:385
+msgid "Title"
+msgstr ""
+
+#: /flexi-pages-widget.php:390
+msgid "Sort by"
+msgstr ""
+
+#: /flexi-pages-widget.php:392
+msgid "Page title"
+msgstr ""
+
+#: /flexi-pages-widget.php:393
+msgid "Menu order"
+msgstr ""
+
+#: /flexi-pages-widget.php:394
+msgid "Date created"
+msgstr ""
+
+#: /flexi-pages-widget.php:395
+msgid "Date modified"
+msgstr ""
+
+#: /flexi-pages-widget.php:396
+msgid "Page ID"
+msgstr ""
+
+#: /flexi-pages-widget.php:397
+msgid "Page author ID"
+msgstr ""
+
+#: /flexi-pages-widget.php:398
+msgid "Page slug"
+msgstr ""
+
+#: /flexi-pages-widget.php:401
+msgid "ASC"
+msgstr ""
+
+#: /flexi-pages-widget.php:402
+msgid "DESC"
+msgstr ""
+
+#: /flexi-pages-widget.php:407
+msgid "Exclude"
+msgstr ""
+
+#: /flexi-pages-widget.php:408
+msgid "Include"
+msgstr ""
+
+#: /flexi-pages-widget.php:409
+msgid "pages"
+msgstr ""
+
+#: /flexi-pages-widget.php:413
+msgid "use &lt;Ctrl&gt; key to select multiple pages"
+msgstr ""
+
+#: /flexi-pages-widget.php:417
+msgid "Show sub-pages"
+msgstr ""
+
+#: /flexi-pages-widget.php:419
+msgid "Show all sub-pages"
+msgstr ""
+
+#: /flexi-pages-widget.php:420
+msgid "Only related sub-pages"
+msgstr ""
+
+#: /flexi-pages-widget.php:421
+msgid "Only strictly related sub-pages"
+msgstr ""
+
+#: /flexi-pages-widget.php:427
+msgid "Show hierarchy"
+msgstr ""
+
+#: /flexi-pages-widget.php:431
+#, php-format
+msgid "%d levels deep"
+msgstr ""
+
+#: /flexi-pages-widget.php:433
+msgid "Unlimited depth"
+msgstr ""
+
+#: /flexi-pages-widget.php:438
+msgid "Show home page"
+msgstr ""
+
+#: /flexi-pages-widget.php:442
+msgid "Show date"
+msgstr ""
+
+#: /flexi-pages-widget.php:444
+msgid "Choose Format"
+msgstr ""
+
+#: /flexi-pages-widget.php:462
+msgid "A highly configurable widget to list pages and sub-pages."
+msgstr ""
+
