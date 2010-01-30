@@ -3,7 +3,7 @@
 Plugin Name: Flexi Pages Widget
 Plugin URI: http://srinig.com/wordpress/plugins/flexi-pages/
 Description: A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
-Version: 1.6
+Version: 1.6.1
 Author: Srini G
 Author URI: http://srinig.com/wordpress
 */
@@ -82,18 +82,10 @@ function flexipages_init()
 			return;
 		
 		foreach($page_array as $page) {
-			if($page['ID'] == 'home') {
-				$class = "home_page";
-				$class .= is_home()?" current_page_item":"";
-			}
-			else {
-				$class = "page_item page-item-".$page['ID'];
-				$class .= is_page($page['ID'])?" current_page_item":"";
-			}
 			
 			if($page['date']) $date = " ".$page['date'];
 			
-			$pagelist .= str_repeat("\t", $level+1).'<li class="'.$class.'"><a href="'.$page['link'].'" title="'.$page['title'].'">'.$page['title'].'</a>'.$date;
+			$pagelist .= str_repeat("\t", $level+1).'<li class="'.$page['class'].'"><a href="'.$page['link'].'" title="'.$page['title'].'">'.$page['title'].'</a>'.$date;
 			if($page['children'])
 				$pagelist .= flexipages_list($page['children'], $level+1);
 			$pagelist.= "</li>\n";
@@ -129,7 +121,17 @@ function flexipages_init()
 		
 		extract($options);
 		
-		if($show_home && $show_home != 'off') $page_array[] = array('ID' => 'home', 'title' => $show_home, 'link' => get_bloginfo('url'), 'children' => array());
+		if($show_home && $show_home != 'off') {
+			$class = "home_page";
+			$class .= is_home()?" current_page_item":"";			
+			$page_array[] = array(
+				'ID' => 'home', 
+				'title' => $show_home, 
+				'link' => get_bloginfo('url'), 
+				'children' => array(),
+				'class' => $class
+			);
+		}	
 		else
 			$page_array = array();
 			
@@ -171,12 +173,21 @@ function flexipages_init()
 					$y = explode("-", $x[0]);
 					$date = date($date_format, mktime(0, 0, 0, $y[1], $y[2], $y[0]));
 				}
+				$class = "page_item page-item-".$page->ID;
+				if(is_page($page->ID))
+					$class .= " current_page_item";
+				else if($page->ID == $currpage_hierarchy[1])
+					$class .= " current_page_ancestor current_page_parent";
+				else if(in_array($page->ID, $currpage_hierarchy))
+					$class .= " current_page_ancestor";
+					
 				$page_array[] = array (
 					'ID' => $page->ID,
 					'title' => $page->post_title,
 					'link' => get_page_link($page->ID),
 					'date' => $date,
-					'children' => $children
+					'children' => $children,
+					'class' => $class
 				);
 			}
 		}
@@ -186,7 +197,12 @@ function flexipages_init()
 		
 	}
 	
-	
+	function flexipages_pageids()
+	{	
+		global $wpdb;
+		$page_ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_type = 'page' AND post_status = 'publish'" );
+		return $page_ids;
+	}
 	
 	function flexipages($args='', $level = 0)
 	{
@@ -211,6 +227,18 @@ function flexipages_init()
 		
 		if($show_subpages == 0)
 			$depth = 1;
+			
+		if($include && ($hierarchy == '1' || $hierarchy == 'on')) {
+			$inc_array = explode(',', $include);
+			if($exclude) $exc_array = explode(',', $exclude); else $exc_array = array();
+			$page_ids = flexipages_pageids();
+			foreach($page_ids as $page_id) {
+				if(!in_array($page_id, $inc_array) && !in_array($page_id, $exc_array))
+					$exc_array[] = $page_id;
+			}
+			$exclude = implode(',', $exc_array);
+			$include = '';		
+		}
 		
 		$page_array = flexipages_get_pages("sort_column={$sort_column}&sort_order={$sort_order}&exclude={$exclude}&include={$include}&show_subpages={$show_subpages}&hierarchy={$hierarchy}&depth={$depth}&show_home={$show_home}&child_of={$child_of}&parent={$child_of}&show_date={$show_date}&date_format={$date_format}");
 		
