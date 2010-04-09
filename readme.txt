@@ -73,11 +73,12 @@ Versions 1.5.5 and above supports localization. The localization template file (
 
 An application like [poEdit](http://www.poedit.net/) can be used to translate the plugin, or just translate the strings in the flexipages.pot file and send it to the plugin author. All translations sent to the author will be bundled with the next version of the plugin.
 
-As of version 1.6.2, Flexi Pages Widget is translated into the following languages:
+As of version 1.6.3, Flexi Pages Widget is translated into the following languages:
 
 * Catalan (`ca`) by Robert Buj Gelonch
 * German (`de_DE`) by [Frank W. Hempel](http://frank-hempel.de/)
 * French (`fr_FR`) by Pierre Sudarovich
+* Italian (`it_IT`) by [Gianni Diurno](http://gidibao.net/)
 * Dutch (`nl_NL`) by [Rene](http://wordpresspluginguide.com/)
 * Brazilian Portugese (`pt_BR`) by Tzor More
 * Russian (`ru_RU`) by [Fat Cow](http://www.fatcow.com)
@@ -180,6 +181,9 @@ Instead of using the widget, the function flexipages() can be called from anywhe
 * `flexipages('sort_column=ID&exclude=2,10,14')` will display the list with items sorted in order of ID. The page IDs 2, 10 and 14 will be excluded.
 
 == Changelog ==
+
+= v1.6.3 (2010-04-09) =
+* Localization in Italian language added.
 
 = v1.6.2 (2010-03-02) =
 * Localization in French language added.
