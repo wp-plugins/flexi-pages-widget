@@ -3,7 +3,7 @@ Contributors: SriniG
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8110402
 Tags: pages, subpages, menu, hierarchy, sidebar, widget, navigation
 Requires at least: 2.7
-Tested up to: 3.5-beta3-22639
+Tested up to: 3.5
 Stable tag: trunk
 
 A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
@@ -193,6 +193,10 @@ Instead of using the widget, the function flexipages() can be called from anywhe
 * `flexipages('sort_column=ID&exclude=2,10,14')` will display the list with items sorted in order of ID. The page IDs 2, 10 and 14 will be excluded.
 
 == Changelog ==
+
+= v1.6.11.1 (2012-12-13) =
+* Re-adding localization files that somehow missed the last update
+* Updating WP compatibility info in readme
 
 = v1.6.11 (2012-11-18) =
 * Added localization in Serbian, Bulgarian, Belorussian, Chinese and Irish languages.
