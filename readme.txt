@@ -3,7 +3,7 @@ Contributors: SriniG
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8110402
 Tags: pages, subpages, menu, hierarchy, sidebar, widget, navigation
 Requires at least: 2.7
-Tested up to: 3.5
+Tested up to: 3.6-beta3-24398
 Stable tag: trunk
 
 A highly configurable WordPress sidebar widget to list pages and sub-pages. User friendly widget control comes with various options. 
@@ -79,7 +79,9 @@ As of the current version, Flexi Pages Widget is translated into the following l
 * Belorussian (`be_BY`) by [Alexander Ovsov](http://webhostinggeeks.com/)
 * Catalan (`ca`) by Robert Buj Gelonch
 * Czech (`cs_CZ`) by Tomáš Hubka
+* Danish (`da_DK`) by [Morten Elm](http://www.dubaifan.dk/)
 * German (`de_DE`) by [Frank W. Hempel](http://frank-hempel.de/)
+* Filipino (`fil_PH`) by [Morten Elm](http://www.storbyfan.dk/)
 * French (`fr_FR`) by Pierre Sudarovich
 * Irish (`ga_IE`) by [Ajeet](http://www.apoto.com/)
 * Hindi (`hi_IN`) by Ashish Jha, [Outshine Solutions](http://outshinesolutions.com/)
@@ -193,6 +195,10 @@ Instead of using the widget, the function flexipages() can be called from anywhe
 * `flexipages('sort_column=ID&exclude=2,10,14')` will display the list with items sorted in order of ID. The page IDs 2, 10 and 14 will be excluded.
 
 == Changelog ==
+
+= v1.6.12 (2013-06-04) =
+* Added localization in Filipino and Danish languages.
+* Minor fixes.
 
 = v1.6.11.1 (2012-12-13) =
 * Re-adding localization files that somehow missed the last update
